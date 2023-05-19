@@ -1,0 +1,166 @@
+package ${package.Controller};
+
+import ${package.Parent}.entity.${entity};
+import ${package.Parent}.service.${entity}Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+import javax.validation.Valid;
+
+import lombok.extern.slf4j.Slf4j;
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+@Api(tags = "$!{table.comment}", description = "$!{table.comment}")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+private ${entity}Service ${entity.toLowerCase()}Service;
+
+    @Autowired
+    public ${entity}Controller(${entity}Service ${entity.toLowerCase()}Service) {
+            this.${entity.toLowerCase()}Service = ${entity.toLowerCase()}Service;
+    }
+
+    /**
+    * 下载导入模板
+    */
+    @GetMapping("/getInitTemplate")
+    @ApiOperation(value = "$!{table.comment}导入模板", httpMethod = "GET")
+    public void getInitTemplate(HttpServletResponse response) {
+        ExcelUtils.exportTemplate(response, "$!{table.comment}导入模板","$!{table.comment}导入模板", ${entity}.class,true);
+    }
+
+    /**
+    * 导入$!{table.comment}信息
+    */
+    @PostMapping(value = "/excelImport")
+    @ApiOperation(value = "导入$!{table.comment}excel", httpMethod = "POST")
+    public AjaxResult excelImport(@RequestParam("file") MultipartFile file) {
+        try {
+            ${entity.toLowerCase()}Service.excelImport(file)};
+            return AjaxResult.ok();
+        } catch (Exception e) {
+            return AjaxResult.error(e.getMessage().replaceAll("com.haier.hrwms.common.exception.ServiceException: ",""));
+        }
+    }
+
+    /**
+    * 导出$!{table.comment}信息
+    */
+    @GetMapping(value = "/excelExport")
+    @ApiOperation(value = "导出$!{table.comment}信息", httpMethod = "GET")
+    public void excelExport(
+    @RequestParam(required = false) List<Long> ids,
+        ${entity}Dto dto,
+        HttpServletResponse response
+        ) {
+        List<${entity}> ${entity.toLowerCase()}s=${entity}Service.excelExport(ids,dto);
+        ExcelUtils.export(response,"$!{table.comment}信息",${entity.toLowerCase()}s,null);
+    }
+
+    /**
+    * 单条新增${entity}
+    */
+    @PostMapping("/create")
+    @ApiOperation(value = "新增记录", httpMethod = "POST")
+    public AjaxResult create(
+    @RequestBody @Valid ${entity} ${entity.toLowerCase()}) {
+        ${entity.toLowerCase()}Service.create(${entity.toLowerCase()});
+        return AjaxResult.ok();
+    }
+
+    /**
+    * 根据{id}更新单条${entity}t记录
+    */
+    @PostMapping("/update")
+    @ApiOperation(value = "修改记录", httpMethod = "POST")
+    public AjaxResult update(
+    @RequestBody @Valid ${entity}Dto dto) {
+
+        ${entity} ${entity.toLowerCase()} = BeanUtil.copyProperties(dto, ${entity}.class);
+
+        ${entity.toLowerCase()}Service.update(${entity.toLowerCase()});
+
+        return AjaxResult.ok();
+    }
+
+    /**
+    * 根据条件查询${entity}集合
+    */
+    @GetMapping("/list")
+    @ApiOperation(value = "列表查询", httpMethod = "GET")
+    public AjaxResult<List<${entity}>> list(
+    @ModelAttribute ${entity}Dto dto) {
+        return AjaxResult.ok(${entity.toLowerCase()}Service.list(${entity}.defaultWrapper(dto)));
+    }
+
+    /**
+    * 根据查询条件,分页查询${entity}
+    */
+    @GetMapping("/page")
+    @ApiOperation(value = "分页查询", httpMethod = "GET")
+    public AjaxResult<Page<${entity}>> page(
+        PageQuery pageQuery, ${entity}Dto dto) {
+
+        Page<${entity}> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+
+        LambdaQueryWrapper<${entity}> queryWrapper = ${entity}.defaultWrapper(dto);
+        return AjaxResult.ok(${entity.toLowerCase()}Service.page(page, queryWrapper));
+    }
+
+    /**
+    * 逻辑删除
+    * 根据{ids}批量删除${entity}
+    */
+    @PostMapping("/logic/delete")
+    @ApiOperation(value = "逻辑删除记录", httpMethod = "POST")
+    public AjaxResult logicDelete(
+    @RequestBody List<Long> ids) {
+
+        ${entity.toLowerCase()}Service.logicDelete(ids);
+
+        return AjaxResult.ok();
+    }
+
+    /**
+    * 物理删除
+    * 根据{ids}批量删除WhCost
+    */
+    @PostMapping("/physical/delete")
+    @ApiOperation(value = "物理删除记录", httpMethod = "POST")
+    public AjaxResult physicalDelete(
+    @RequestBody List<Long> ids) {
+        ${entity.toLowerCase()}Service.removeByIds(ids);
+        return AjaxResult.ok();
+        }
+    }
+#end

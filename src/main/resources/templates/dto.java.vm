@@ -1,0 +1,93 @@
+package ${package.Parent}.dto;
+
+import cn.hutool.core.util.ObjectUtil;
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+#if(${springdoc})
+import io.swagger.v3.oas.annotations.media.Schema;
+#elseif(${swagger})
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+#if(${entityLombokModel})
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+#if(${chainModel})
+import lombok.experimental.Accessors;
+#end
+#end
+
+import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
+import com.haier.hrwms.common.excel.ExcelExport;
+import com.haier.hrwms.common.excel.ExcelImport;
+
+/**
+ * <p>
+ * $!{test}
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Data
+public class ${entity}Dto {
+#if(${entitySerialVersionUID})
+
+    private static final long serialVersionUID = 1L;
+#end
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+
+#if(${field.keyFlag})
+#set($keyPropertyName=${field.propertyName})
+#end
+#if("$!field.comment" != "")
+  #if(${springdoc})
+    @Schema(description = "${field.comment}")
+  #elseif(${swagger})
+    @ApiModelProperty("${field.comment}")
+  #else
+    /**
+     * ${field.comment}
+     */
+  #end
+#end
+#if(${field.keyFlag})
+## 主键
+  #if(${field.keyIdentityFlag})
+    @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
+  #elseif(!$null.isNull(${idType}) && "$!idType" != "")
+    @TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
+  #elseif(${field.convert})
+    @TableId("${field.annotationColumnName}")
+  #end
+## 普通字段
+#elseif(${field.fill})
+## -----   存在字段填充设置   -----
+  #if(${field.convert})
+    @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
+  #else
+    @TableField(fill = FieldFill.${field.fill})
+  #end
+#elseif(${field.convert})
+    @TableField("${field.annotationColumnName}")
+#end
+## 乐观锁注解
+#if(${field.versionField})
+    @Version
+#end
+## 逻辑删除注解
+#if(${field.logicDeleteField})
+    @TableLogic
+#end
+    private ${field.propertyType} ${field.propertyName};
+#end
+## ----------  END 字段循环遍历  ----------
+
+}

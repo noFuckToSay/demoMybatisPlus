@@ -1,0 +1,144 @@
+package ${package.Entity};
+
+import cn.hutool.core.util.ObjectUtil;
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+#if(${springdoc})
+import io.swagger.v3.oas.annotations.media.Schema;
+#elseif(${swagger})
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+#if(${entityLombokModel})
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+#if(${chainModel})
+import lombok.experimental.Accessors;
+#end
+#end
+
+import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
+import com.haier.hrwms.common.excel.ExcelExport;
+import com.haier.hrwms.common.excel.ExcelImport;
+
+/**
+ * <p>
+ * $!{table.comment}
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Data
+#if(${entityLombokModel})
+@Getter
+@Setter
+  #if(${chainModel})
+@Accessors(chain = true)
+  #end
+#end
+#if(${table.convert})
+@TableName("${schemaName}${table.name}")
+#end
+#if(${springdoc})
+@Schema(name = "${entity}", description = "$!{table.comment}")
+#elseif(${swagger})
+@ApiModel(value = "${entity}对象", description = "$!{table.comment}")
+#end
+#if(${superEntityClass})
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#elseif(${activeRecord})
+public class ${entity} extends Model<${entity}> {
+#elseif(${entitySerialVersionUID})
+public class ${entity} implements Serializable {
+#else
+public class ${entity} {
+#end
+#if(${entitySerialVersionUID})
+
+    private static final long serialVersionUID = 1L;
+#end
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+
+#if(${field.keyFlag})
+#set($keyPropertyName=${field.propertyName})
+#end
+#if("$!field.comment" != "")
+  #if(${springdoc})
+    @Schema(description = "${field.comment}")
+  #elseif(${swagger})
+    @ApiModelProperty("${field.comment}")
+  #else
+    /**
+     * ${field.comment}
+     */
+  #end
+#end
+#if(${field.keyFlag})
+## 主键
+  #if(${field.keyIdentityFlag})
+    @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
+  #elseif(!$null.isNull(${idType}) && "$!idType" != "")
+    @TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
+  #elseif(${field.convert})
+    @TableId("${field.annotationColumnName}")
+  #end
+## 普通字段
+#elseif(${field.fill})
+## -----   存在字段填充设置   -----
+  #if(${field.convert})
+    @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
+  #else
+    @TableField(fill = FieldFill.${field.fill})
+  #end
+#elseif(${field.convert})
+    @TableField("${field.annotationColumnName}")
+#end
+#if(!${field.keyFlag})
+  ## -----   添加javax-validation 注解    -----
+  #if(!${field.metaInfo.nullable})
+  @NotNull(message="${field.name}不能为空")
+  ## haier excel导入导出注解(必填项)
+  @ExcelImport(value = "${field.comment}(必填)",required = true)
+  @ExcelExport(value = "${field.comment}(必填)",sort = $foreach.index,example = "${field.name}")
+  #else
+  ## haier excel导入导出注解(非必填项)
+  @ExcelImport(value = "${field.comment}")
+  @ExcelExport(value = "${field.comment}",sort = $foreach.index,example = "${field.name}")
+  #end
+#end
+## 乐观锁注解
+#if(${field.versionField})
+    @Version
+#end
+## 逻辑删除注解
+#if(${field.logicDeleteField})
+    @TableLogic
+#end
+    private ${field.propertyType} ${field.propertyName};
+#end
+## ----------  END 字段循环遍历  ----------
+
+    public static LambdaQueryWrapper<${entity}> defaultWrapper(${entity}Dto dto) {
+        LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+          .orderByAsc(${entity}::getCreateTime)
+          .eq(${entity}::getIsDel,0);
+        if (ObjectUtil.isNotNull(dto)) {
+        //queryWrapper
+        //.like(StrUtil.isNotEmpty(dto.getOrderNo()), ${entity}::getOrderNo, dto.getOrderNo())   //单号
+        //.ge(ObjectUtil.isNotEmpty(dto.getCreateTimeStart()), ${entity}::getCreateTime, dto.getCreateTimeStart())   //创建时间开始
+        //.le(ObjectUtil.isNotEmpty(dto.getCreateTimeEnd()), ${entity}::getCreateTime, dto.getCreateTimeEnd())   //创建时间结束
+        //.eq(ObjectUtil.isNotNull(dto.getStatus()), ${entity}::getStatus, dto.getStatus()); //状态
+        }
+
+        return queryWrapper;
+    }
+}

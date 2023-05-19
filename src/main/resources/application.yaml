@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demoMybatisPlus
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: master
+    url: jdbc:mysql://localhost:3306/world?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: admin
+mybatis-plus:
+  configuration:
+    jdbc-type-for-null: 'null'
+    call-setters-on-nulls: true
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    #比如数据库中的字段名是id_number        对应的实体类的名字是idNumber
+    map-underscore-to-camel-case: true
+    #加上这个配置就可以打印sql语句  yaml里是自动配置，自己手动定义的数据源不会打印sql,需要在config类里再定义一遍
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

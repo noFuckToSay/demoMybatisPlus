@@ -1,0 +1,48 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+        /**
+        * excel导入
+        * */
+        void excelImport(MultipartFile file);
+
+        /**
+        * excel导出
+        * */
+        List<${entity}> excelExport(List<Long> ids,${entity}Dto dto);
+
+        /**
+        * 新增
+        * */
+        void create(${entity} ${entity.toLowerCase()});
+
+        /**
+        * excel修改
+        * */
+        void update(${entity} ${entity.toLowerCase()});
+
+        /**
+        * 逻辑删除
+        * */
+        void logicDelete(List<Long> ids);
+
+        }
+#end
