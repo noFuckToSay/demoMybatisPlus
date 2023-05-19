@@ -1,5 +1,6 @@
 package com.example.demoMybatisPlus.user.dto;
 
+import com.example.demoMybatisPlus.user.enums.UserStatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -50,7 +51,7 @@ public class UserRdto {
     private String updateBy;
 
     @ApiModelProperty(value = "状态 枚举",example = "10")
-    private Integer status;
+    private UserStatusEnum status;
 
     @ApiModelProperty(value = "当前页数",example = "1")
     private Integer pageNum;

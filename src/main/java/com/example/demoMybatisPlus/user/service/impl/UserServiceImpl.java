@@ -37,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .stream()
                 .map(dto->{
                     User user =UserMap.INSTANCE.fromCdto(dto);
-                    user.setStatus(UserStatusEnum.NEW.getCode());
+                    user.setStatus(UserStatusEnum.NEW);
                     return user;
                 })
                 .collect(Collectors.toList());
@@ -61,6 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq(StrUtil.isNotBlank(userRdto.getName()),User::getName,userRdto.getName())
                 .eq(StrUtil.isNotBlank(userRdto.getEmail()),User::getEmail,userRdto.getEmail())
                 .eq(ObjectUtil.isNotNull(userRdto.getAge()),User::getAge,userRdto.getAge())
+                .eq(ObjectUtil.isNotNull(userRdto.getStatus()),User::getStatus,userRdto.getStatus())
         );
 
         List<UserVo> userVos=users.stream().map(UserMap.INSTANCE::toVo).collect(Collectors.toList());

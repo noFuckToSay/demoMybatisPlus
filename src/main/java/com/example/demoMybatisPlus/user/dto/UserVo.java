@@ -47,5 +47,5 @@ public class UserVo {
     private String updateBy;
 
     @ApiModelProperty(value = "状态 枚举",example = "10")
-    private Integer status;
+    private UserStatusEnum status;
 }

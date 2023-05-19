@@ -20,6 +20,8 @@ public enum UserStatusEnum {
     }
 
     @Getter
+    @EnumValue
+    @JsonValue
     private Integer code;
     @Getter
     private String name;

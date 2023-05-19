@@ -75,7 +75,7 @@ public class User implements Serializable {
     /**
      * 状态 枚举值
      * */
-    private Integer status;
+    private UserStatusEnum status;
 
     @TableLogic
     private Integer isDel;

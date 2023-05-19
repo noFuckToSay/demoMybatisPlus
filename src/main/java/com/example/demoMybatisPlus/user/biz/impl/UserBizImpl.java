@@ -70,7 +70,7 @@ public class UserBizImpl implements UserBiz {
         ).stream().map(u -> {
             User user=new User();
             user.setId(u.getId());
-            user.setStatus(UserStatusEnum.APPROVAL.getCode());
+            user.setStatus(UserStatusEnum.APPROVAL);
             return user;
         }).collect(Collectors.toList());
 
@@ -86,7 +86,7 @@ public class UserBizImpl implements UserBiz {
         ).stream().map(u -> {
             User user=new User();
             user.setId(u.getId());
-            user.setStatus(UserStatusEnum.NEW.getCode());
+            user.setStatus(UserStatusEnum.NEW);
             return user;
         }).collect(Collectors.toList());
 
