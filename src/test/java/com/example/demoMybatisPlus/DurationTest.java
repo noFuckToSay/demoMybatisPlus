@@ -21,10 +21,15 @@ public class DurationTest {
     @Test
     public void testDuration(){
         LocalDateTime now =LocalDateTime.now();
-        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime next=LocalDateTime.parse("2023-04-10 17:00:00",formatter);
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        LocalDateTime next=LocalDateTime.now();
         Duration duration=Duration.between(now,next);
-        String interval= LocalTime.ofNanoOfDay(duration.toNanos()).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String interval= LocalTime.ofNanoOfDay(duration.toNanos()).format(DateTimeFormatter.ofPattern("HH:mm:ss:SSS"));
 
         System.out.println(interval);
     }

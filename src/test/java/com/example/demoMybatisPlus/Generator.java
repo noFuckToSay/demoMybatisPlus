@@ -39,7 +39,7 @@ public class Generator {
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
         String packageName="zjtServicePlat";
-        String tableName="vmi_zjt_service_plat_eco_throw";
+        String tableName="factory_sluggish_amount";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
