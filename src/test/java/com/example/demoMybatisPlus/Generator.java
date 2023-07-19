@@ -23,23 +23,23 @@ public class Generator {
 
     @Test
     void test(){
-//        String jdbcUrl="jdbc:mysql://127.0.0.1:3306/world";
-//        String userName="root";
-//        String password="admin";
+        String jdbcUrl="jdbc:mysql://127.0.0.1:3306/world";
+        String userName="root";
+        String password="admin";
 
 //        String jdbcUrl="jdbc:mysql://rm-m5e4y1r17526z63ey.mysql.rds.aliyuncs.com:3306/uat-haier-vmi?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
 //        String userName="hdshmls_admin";
 //        String password="hdshmls@^01_f";
 
-        String jdbcUrl="jdbc:mysql://rm-m5er1vh0cj38ao08m.mysql.rds.aliyuncs.com:3306/haier-vmi?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
-        String userName= "vmi_rt";
-        String password="Hpwd@_luf09^fffw3";
+//        String jdbcUrl="jdbc:mysql://rm-m5er1vh0cj38ao08m.mysql.rds.aliyuncs.com:3306/haier-vmi?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
+//        String userName= "vmi_rt";
+//        String password="Hpwd@_luf09^fffw3";
 
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="zjtServicePlat";
-        String tableName="factory_sluggish_amount";
+        String packageName="labelLoadRecord";
+        String tableName="label_load_record";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
