@@ -38,8 +38,8 @@ public class Generator {
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="labelLoadRecord";
-        String tableName="label_load_record";
+        String packageName="sluggishLabelDeal";
+        String tableName="sluggish_label_deal";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
@@ -67,7 +67,7 @@ public class Generator {
                 .strategyConfig(builder -> {
                     builder
                             .addInclude(tableName) // 设置需要生成的表名
-                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_") // 设置过滤表前缀
+                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_","vmi_") // 设置过滤表前缀
                             .entityBuilder()
                             .enableFileOverride()
                             .enableLombok()
