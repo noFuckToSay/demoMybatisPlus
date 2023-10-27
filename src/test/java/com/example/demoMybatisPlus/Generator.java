@@ -38,8 +38,8 @@ public class Generator {
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="sluggishLabelDeal";
-        String tableName="sluggish_label_deal";
+        String packageName="oneDetail";
+        String tableName="one_detail";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
