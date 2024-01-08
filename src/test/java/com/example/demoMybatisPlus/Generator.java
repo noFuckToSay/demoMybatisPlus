@@ -23,23 +23,23 @@ public class Generator {
 
     @Test
     void test(){
-        String jdbcUrl="jdbc:mysql://127.0.0.1:3306/world";
-        String userName="root";
-        String password="admin";
+//        String jdbcUrl="jdbc:mysql://127.0.0.1:3306/world";
+//        String userName="root";
+//        String password="admin";
 
 //        String jdbcUrl="jdbc:mysql://rm-m5e4y1r17526z63ey.mysql.rds.aliyuncs.com:3306/uat-haier-vmi?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
 //        String userName="hdshmls_admin";
 //        String password="hdshmls@^01_f";
 
-//        String jdbcUrl="jdbc:mysql://rm-m5er1vh0cj38ao08m.mysql.rds.aliyuncs.com:3306/haier-vmi?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
-//        String userName= "vmi_rt";
-//        String password="Hpwd@_luf09^fffw3";
+        String jdbcUrl="jdbc:mysql://pc-m5e6lv6a2m2753w5p.mysql.polardb.rds.aliyuncs.com:3333/haier-wms-hd02?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
+        String userName= "vmi0908";
+        String password="jht679u@8nHJG";
 
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="oneDetail";
-        String tableName="one_detail";
+        String packageName="gmdcPartConf";
+        String tableName="gmdc_part_conf_log";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
@@ -67,7 +67,7 @@ public class Generator {
                 .strategyConfig(builder -> {
                     builder
                             .addInclude(tableName) // 设置需要生成的表名
-                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_","vmi_") // 设置过滤表前缀
+                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_","vmi_,wh_evaluate_") // 设置过滤表前缀
                             .entityBuilder()
                             .enableFileOverride()
                             .enableLombok()
