@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * 库存汇总处理
  */
-public abstract class AbsSumIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
+public abstract class AbstractInventoryStatusProcessSummary<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
 
     /**
      * 批量处理新增的库存信息
