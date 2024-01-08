@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @param <W>
  */
-public interface InvStatsProcess<W extends InventoryWater> {
+public interface InventoryStatsProcess<W extends InventoryWater> {
 
     /**
      * 处理
