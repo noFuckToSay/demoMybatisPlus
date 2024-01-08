@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @param <T> 服务处理对象
  * @param <W> 库存流水
  */
-public abstract class AbsDetailIsp<S extends IspService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
+public abstract class AbsDetailIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
 
     /**
      * 批量处理新增的库存信息

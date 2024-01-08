@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @date  :2022/11/7 17:21
  * @description : sap库存总表处理
  */
-public abstract class AbsFactorySumIsp <S extends IspService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
+public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
 
     @Override
     public void batchProcessSaveWater() {

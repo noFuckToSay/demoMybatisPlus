@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.*;
  * 库存库位容量处理
  */
 @Slf4j
-public abstract class AbsLocIsp<S extends IspService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
+public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
 
 
     @Override

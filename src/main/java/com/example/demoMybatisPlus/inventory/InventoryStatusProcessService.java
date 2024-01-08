@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 库存统计处理接口
  */
-public interface IspService<T> {
+public interface InventoryStatusProcessService<T> {
 
     /**
      * 批量新增

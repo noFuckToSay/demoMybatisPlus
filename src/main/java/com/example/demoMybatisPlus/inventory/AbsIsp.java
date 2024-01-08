@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.groupingBy;
  * @param <W> 库存流水
  */
 @Slf4j
-public abstract class AbsIsp<S extends IspService<T>, T, W extends InventoryWater> implements InvStatsProcess<W> {
+public abstract class AbsIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> implements InvStatsProcess<W> {
 
     protected S service;
 
