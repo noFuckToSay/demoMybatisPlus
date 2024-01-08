@@ -1,27 +1,24 @@
-package com.example.demoMybatisPlus.inventory.impl;
+package com.example.demoMybatisPlus.inventory.service.impl;
 
-import com.example.demoMybatisPlus.inventory.InventoryStatusProcessService;
+import com.example.demoMybatisPlus.inventory.service.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeScope;
 import com.example.demoMybatisPlus.inventory.utils.InvIdentifierUtils;
+import com.example.demoMybatisPlus.inventory.utils.WhLocType;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/**
- * 库存明细处理
- *
- * @param <S> 服务
- * @param <T> 服务处理对象
- * @param <W> 库存流水
+/*
+ * @author :22066104
+ * @date  :2022/11/7 17:21
+ * @description : sap库存总表处理
  */
-public abstract class AbsDetailIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
+public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
 
-    /**
-     * 批量处理新增的库存信息
-     */
     @Override
     public void batchProcessSaveWater() {
         inventoryStatusProcessService.saveBatchByIdentifier(paramNotDb);
@@ -52,7 +49,7 @@ public abstract class AbsDetailIsp<S extends InventoryStatusProcessService<T>, T
      */
     @Override
     public void setIdentifiers() {
-        InvIdentifierUtils.setIdentifierWaters(inventoryWaters);
+        InvIdentifierUtils.setIdentifierSumsSap(inventoryWaters);
     }
 
     /**
@@ -70,6 +67,11 @@ public abstract class AbsDetailIsp<S extends InventoryStatusProcessService<T>, T
      */
     @NotNull
     private Predicate<W> getEligibleWaters() {
-        return w -> InvChangeScope.ALL.included(w.getInvChangeScopes()) || InvChangeScope.DETAIL.included(w.getInvChangeScopes());
+        return w -> InvChangeScope.ALL.included(w.getInvChangeScopes()) || InvChangeScope.SUM.included(w.getInvChangeScopes())|| InvChangeScope.FAC.included(w.getInvChangeScopes());
+    }
+
+    protected List<W> getAvailableWaters(List<W> waters) {
+        List<String> availableInvLocsOfAvailableInv = Arrays.asList(WhLocType.INV_LOC.getCode(), "", null);
+        return waters.stream().filter(w -> availableInvLocsOfAvailableInv.contains(w.getWhLocType())).collect(Collectors.toList());
     }
 }

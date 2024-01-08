@@ -1,4 +1,4 @@
-package com.example.demoMybatisPlus.inventory;
+package com.example.demoMybatisPlus.inventory.service;
 
 import java.util.List;
 

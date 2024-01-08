@@ -1,7 +1,7 @@
-package com.example.demoMybatisPlus.inventory.impl;
+package com.example.demoMybatisPlus.inventory.service.impl;
 
 import cn.hutool.core.util.HashUtil;
-import com.example.demoMybatisPlus.inventory.InventoryStatusProcessService;
+import com.example.demoMybatisPlus.inventory.service.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeScope;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeType;

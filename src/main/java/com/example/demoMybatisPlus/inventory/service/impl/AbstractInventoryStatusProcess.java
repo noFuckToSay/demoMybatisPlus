@@ -1,19 +1,16 @@
-package com.example.demoMybatisPlus.inventory.impl;
+package com.example.demoMybatisPlus.inventory.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.example.demoMybatisPlus.inventory.InventoryStatsProcess;
-import com.example.demoMybatisPlus.inventory.InventoryStatusProcessService;
+import com.example.demoMybatisPlus.inventory.service.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
-import com.example.demoMybatisPlus.inventory.utils.InvChangeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
