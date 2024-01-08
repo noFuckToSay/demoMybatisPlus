@@ -1,7 +1,7 @@
 package com.example.demoMybatisPlus.inventory.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.example.demoMybatisPlus.inventory.InventoryStatsProcess;
+import com.example.demoMybatisPlus.inventory.service.InventoryStatsProcess;
 import com.example.demoMybatisPlus.inventory.service.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
 import lombok.extern.slf4j.Slf4j;
