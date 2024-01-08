@@ -13,7 +13,7 @@ public interface InventoryStatusProcessService<T> {
      * @param ts 参数集合
      * @return 行数
      */
-    int saveBatchByIdentifier(List<T> ts);
+    int saveBatchByIdentifier(List<T> inventorys);
 
     /**
      * 批量修改
@@ -21,7 +21,7 @@ public interface InventoryStatusProcessService<T> {
      * @param ts 参数集合
      * @return 行数
      */
-    int updateBatchByIdentifier(List<T> ts);
+    int updateBatchByIdentifier(List<T> inventorys);
 
     /**
      * 根据 identifier 查询是否存在存在数据库
