@@ -1,6 +1,7 @@
-package com.example.demoMybatisPlus.inventory;
+package com.example.demoMybatisPlus.inventory.impl;
 
 import cn.hutool.core.util.HashUtil;
+import com.example.demoMybatisPlus.inventory.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeScope;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeType;
@@ -23,12 +24,12 @@ import static java.util.stream.Collectors.*;
  * 库存库位容量处理
  */
 @Slf4j
-public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
+public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
 
 
     @Override
     public void setIdentifiers() {
-        InvIdentifierUtils.setIdentifierWhLocs(waters);
+        InvIdentifierUtils.setIdentifierWhLocs(inventoryWaters);
     }
 
     /**
@@ -36,7 +37,7 @@ public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W
      */
     @Override
     public void doPreProcessWaters() {
-        this.waters = waters.stream().filter(getEligibleWaters()).collect(Collectors.toList());
+        this.inventoryWaters = inventoryWaters.stream().filter(getEligibleWaters()).collect(Collectors.toList());
     }
 
     /**
@@ -55,7 +56,7 @@ public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W
      */
     public void createSParamsFromWaters() {
         // 根据库位分组
-        Map<Long, List<W>> watersPerIdentifier = waters.stream().collect(groupingBy(InventoryWater::getIdentifier));
+        Map<Long, List<W>> watersPerIdentifier = inventoryWaters.stream().collect(groupingBy(InventoryWater::getIdentifier));
         List<T> whLocs = new ArrayList<>();
         /*
          * 相同库位、相同标签下的逻辑处理

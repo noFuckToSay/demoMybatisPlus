@@ -1,5 +1,6 @@
-package com.example.demoMybatisPlus.inventory;
+package com.example.demoMybatisPlus.inventory.impl;
 
+import com.example.demoMybatisPlus.inventory.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
 import com.example.demoMybatisPlus.inventory.utils.InvChangeScope;
 import com.example.demoMybatisPlus.inventory.utils.InvIdentifierUtils;
@@ -11,16 +12,17 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/*
- * @author :22066104
- * @date  :2022/11/7 17:21
- * @description : sap库存总表处理
+/**
+ * 库存汇总处理
  */
-public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbsIsp<S, T, W> {
+public abstract class AbsSumIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
 
+    /**
+     * 批量处理新增的库存信息
+     */
     @Override
     public void batchProcessSaveWater() {
-        service.saveBatchByIdentifier(paramNotDb);
+        inventoryStatusProcessService.saveBatchByIdentifier(paramNotDb);
     }
 
     /**
@@ -28,7 +30,7 @@ public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<
      */
     @Override
     public void batchProcessUpdateWater() {
-        service.updateBatchByIdentifier(paramInDb);
+        inventoryStatusProcessService.updateBatchByIdentifier(paramInDb);
     }
 
     /**
@@ -39,16 +41,15 @@ public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<
      */
     @Override
     public List<Long> getByIdentifiers(List<Long> identifiers) {
-        return service.getByIdentifiers(identifiers);
+        return inventoryStatusProcessService.getByIdentifiers(identifiers);
     }
-
 
     /**
      * 处理库存唯一标识
      */
     @Override
     public void setIdentifiers() {
-        InvIdentifierUtils.setIdentifierSumsSap(waters);
+        InvIdentifierUtils.setIdentifierSums(inventoryWaters);
     }
 
     /**
@@ -56,7 +57,7 @@ public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<
      */
     @Override
     public void doPreProcessWaters() {
-        this.waters = waters.stream().filter(getEligibleWaters()).collect(Collectors.toList());
+        this.inventoryWaters = inventoryWaters.stream().filter(getEligibleWaters()).collect(Collectors.toList());
     }
 
     /**
@@ -66,9 +67,15 @@ public abstract class AbsFactorySumIsp <S extends InventoryStatusProcessService<
      */
     @NotNull
     private Predicate<W> getEligibleWaters() {
-        return w -> InvChangeScope.ALL.included(w.getInvChangeScopes()) || InvChangeScope.SUM.included(w.getInvChangeScopes())|| InvChangeScope.FAC.included(w.getInvChangeScopes());
+        return w -> InvChangeScope.ALL.included(w.getInvChangeScopes()) || InvChangeScope.SUM.included(w.getInvChangeScopes());
     }
 
+    /**
+     * 获取可用库存流水
+     *
+     * @param waters 库存流水
+     * @return 可用库存流水
+     */
     protected List<W> getAvailableWaters(List<W> waters) {
         List<String> availableInvLocsOfAvailableInv = Arrays.asList(WhLocType.INV_LOC.getCode(), "", null);
         return waters.stream().filter(w -> availableInvLocsOfAvailableInv.contains(w.getWhLocType())).collect(Collectors.toList());
