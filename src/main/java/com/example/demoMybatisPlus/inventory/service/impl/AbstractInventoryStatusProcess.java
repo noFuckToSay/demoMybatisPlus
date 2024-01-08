@@ -141,7 +141,7 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
     }
 
     /**
-     * 获取存在的唯一标识
+     * 从数据库中获取存在的唯一标识
      *
      * @param identifiers 唯一标识集合
      * @return 已存在数据库的唯一标识
