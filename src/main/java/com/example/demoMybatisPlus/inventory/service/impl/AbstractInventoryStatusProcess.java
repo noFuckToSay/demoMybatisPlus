@@ -174,8 +174,7 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
     /**
      * 批量处理新增的库存信息（无新增数据不调用此方法）
      */
-    public void batchProcessSaveWater() {
-    }
+    public abstract void batchProcessSaveWater();
 
     /**
      * 批量处理更新的库存信息（无更新数据不调用此方法）
