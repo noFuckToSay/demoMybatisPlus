@@ -16,5 +16,5 @@ public interface InventoryStatsProcess<W extends InventoryWater> {
      *
      * @param waters 库存流水集合
      */
-    void process(List<W> waters);
+    void process(List<W> inventoryWaters);
 }
