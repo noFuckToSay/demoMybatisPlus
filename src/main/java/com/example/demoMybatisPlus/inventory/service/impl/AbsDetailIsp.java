@@ -41,7 +41,7 @@ public abstract class AbsDetailIsp<S extends InventoryStatusProcessService<T>, T
      * @param identifiers 唯一标识集合
      * @return 已存在数据库的唯一标识
      */
-    @Override
+//    @Override
     public List<Long> getByIdentifiers(List<Long> identifiers) {
         return inventoryStatusProcessService.getByIdentifiers(identifiers);
     }

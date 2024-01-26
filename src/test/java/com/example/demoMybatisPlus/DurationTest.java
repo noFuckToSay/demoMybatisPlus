@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,5 +33,18 @@ public class DurationTest {
         String interval= LocalTime.ofNanoOfDay(duration.toNanos()).format(DateTimeFormatter.ofPattern("HH:mm:ss:SSS"));
 
         System.out.println(interval);
+    }
+
+    @Test
+    public void test(){
+        BigDecimal a=BigDecimal.TEN;
+        System.out.println("a is "+a);
+        testSub(a);
+        System.out.println("a is "+a);
+    }
+
+    private void testSub(BigDecimal num){
+        num=num.subtract(BigDecimal.ONE);
+        System.out.println("num is "+num);
     }
 }

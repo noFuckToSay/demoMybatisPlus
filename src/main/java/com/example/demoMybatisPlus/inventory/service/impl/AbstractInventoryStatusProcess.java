@@ -81,10 +81,10 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
         setIdentifiers();   //设置流水唯一标识
         createSParamsFromWaters();
         if (CollectionUtil.isNotEmpty(paramNotDb)) {
-            batchProcessSaveWater();
+            inventoryStatusProcessService.saveBatchByIdentifier(paramNotDb);
         }
         if (CollectionUtil.isNotEmpty(paramInDb)) {
-            batchProcessUpdateWater();
+            inventoryStatusProcessService.updateBatchByIdentifier(paramInDb);
         }
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
                 .stream()
                 .map(W::getIdentifier)
                 .collect(Collectors.toList());  //唯一标识list
-        List<Long> identifiersInDb = getByIdentifiers(identifiers);   //已存在表中的唯一标识
+        List<Long> identifiersInDb = inventoryStatusProcessService.getByIdentifiers(identifiers);;   //已存在表中的唯一标识
         List<Long> identifiersNotDb = identifiers
                 .stream()
                 .filter(x -> !identifiersInDb.contains(x))
@@ -140,13 +140,6 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
         this.paramInDb = getSParamsFromWatersPerIdentifier(watersPerIdentifierInDb);  //需要更新的库存记录
     }
 
-    /**
-     * 从数据库中获取存在的唯一标识
-     *
-     * @param identifiers 唯一标识集合
-     * @return 已存在数据库的唯一标识
-     */
-    public abstract List<Long> getByIdentifiers(List<Long> identifiers);
 
     /**
      * 根据 Identifier 把库存流水转 S 服务处理的对象集合
