@@ -24,32 +24,26 @@ import static java.util.stream.Collectors.*;
  * 库存库位容量处理
  */
 @Slf4j
-public abstract class AbsLocIsp<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
+public abstract class AbstractInventoryStatusProcessWhLoc<S extends InventoryStatusProcessService<T>, T, W extends InventoryWater> extends AbstractInventoryStatusProcess<S, T, W> {
 
-
-    @Override
-    public void setIdentifiers() {
-        InvIdentifierUtils.setIdentifierWhLocs(inventoryWaters);
-    }
 
     /**
      * 预处理数据
      */
     @Override
     public void doPreProcessWaters() {
-        this.inventoryWaters = inventoryWaters.stream().filter(getEligibleWaters()).collect(Collectors.toList());
+        this.inventoryWaters = inventoryWaters
+                .stream()
+                .filter(w->{
+                    return  InvChangeScope.isDetail(w.getInvChangeScopes())
+                            && InvType.TOTAL.eq(w.getInvType());
+                }).collect(Collectors.toList());
     }
 
-    /**
-     * 获取明细表 总库存操作的流水（库位容量计算只根据总库存计算）
-     *
-     * @return 库存流水集合
-     */
-    @NotNull
-    private Predicate<W> getEligibleWaters() {
-        return w -> InvChangeScope.isDetail(w.getInvChangeScopes()) && InvType.TOTAL.eq(w.getInvType());
+    @Override
+    public void setIdentifiers() {
+        InvIdentifierUtils.setIdentifierWhLocs(inventoryWaters);
     }
-
 
     /**
      * 处理流水生成库存信息
