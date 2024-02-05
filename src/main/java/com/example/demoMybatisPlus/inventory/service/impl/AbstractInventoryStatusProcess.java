@@ -4,13 +4,16 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.example.demoMybatisPlus.inventory.service.InventoryStatsProcess;
 import com.example.demoMybatisPlus.inventory.service.InventoryStatusProcessService;
 import com.example.demoMybatisPlus.inventory.entity.InventoryWater;
+import com.example.demoMybatisPlus.inventory.utils.InvChangeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -164,13 +167,28 @@ public abstract class AbstractInventoryStatusProcess<S extends InventoryStatusPr
      */
     public abstract T getSParamsFromWaters(List<W> inventoryWaters);
 
-    /**
-     * 批量处理新增的库存信息（无新增数据不调用此方法）
-     */
-    public abstract void batchProcessSaveWater();
 
     /**
-     * 批量处理更新的库存信息（无更新数据不调用此方法）
+     * 获取对应类型的库存值
+     *
+     * @param waters    库存流水
+     * @param predicate 条件
+     * @return 库存数量
      */
-    public abstract void batchProcessUpdateWater();
+    public BigDecimal getSumQtyByChangeType(List<W> waters, Predicate<W> predicate) {
+        List<W> watersByInvType = waters
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+        BigDecimal addQty = watersByInvType
+                .stream()
+                .filter(w -> InvChangeType.ADD.eq(w.getChangeType()))
+                .map(W::getQty)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal subQty = watersByInvType
+                .stream()
+                .filter(w -> InvChangeType.SUB.eq(w.getChangeType()))
+                .map(W::getQty).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return addQty.subtract(subQty);
+    }
 }
