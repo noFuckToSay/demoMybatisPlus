@@ -63,7 +63,14 @@ public class UserController {
     @PostMapping("/update")
     @ApiOperation(value = "更新用户",httpMethod = "POST")
     public AjaxResult update(
-            @RequestBody @Valid UserUdto userUdto) {
+            @RequestBody @Valid UserUdto dto) {
+
+        User user=new User();
+        user.setId(dto.getId());
+        user.setUserName(dto.getUserName());
+        user.setPassword(dto.getPassword());
+        user.setUpdateBy(UserContext.currentUser().getUserName());
+        service.updateById(user);
         return AjaxResult.ok();
     }
 

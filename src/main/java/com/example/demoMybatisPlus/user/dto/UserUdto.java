@@ -17,17 +17,14 @@ import javax.validation.constraints.NotNull;
 public class UserUdto {
 
     @ApiModelProperty(value = "id",example = "123")
-    @NotNull(message = "id不能为空}")
+    @NotNull(message = "id不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "姓名",example = "张三")
-    @NotEmpty(message = "姓名不能为空}")
-    private String name;
+    @ApiModelProperty(value = "用户名",example = "张三")
+    @NotEmpty(message = "用户名")
+    private String userName;
 
-    @ApiModelProperty(value = "年龄",example = "20")
-    @NotNull(message = "年龄不能为空}")
-    private Integer age;
-
-    @ApiModelProperty(value = "邮箱",example = "123@123.com")
-    private String email;
+    @ApiModelProperty(value = "密码",example = "12345.abc")
+    @NotNull(message = "密码不能为空")
+    private String password;
 }
