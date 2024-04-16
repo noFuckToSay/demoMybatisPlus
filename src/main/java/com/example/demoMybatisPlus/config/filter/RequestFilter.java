@@ -17,7 +17,7 @@ import java.util.Optional;
  * @description:
  */
 @Slf4j
-@Component
+//@Component
 public class RequestFilter implements Filter {
 
     @Override

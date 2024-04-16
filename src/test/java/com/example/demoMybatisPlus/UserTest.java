@@ -21,8 +21,6 @@ public class UserTest {
     @Test
     void test(){
         User user=new User();
-        user.setStatus(UserStatusEnum.NEW);
-        log.info(user.getStatus()+"");
 
         UserVo vo= UserMap.INSTANCE.toVo(user);
         log.info(vo.getStatus()+"");

@@ -37,7 +37,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .stream()
                 .map(dto->{
                     User user =UserMap.INSTANCE.fromCdto(dto);
-                    user.setStatus(UserStatusEnum.NEW);
                     return user;
                 })
                 .collect(Collectors.toList());
@@ -58,10 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<UserVo> list(UserRdto userRdto) {
         List<User> users= this.list(Wrappers.<User>lambdaQuery()
-                .eq(StrUtil.isNotBlank(userRdto.getName()),User::getName,userRdto.getName())
-                .eq(StrUtil.isNotBlank(userRdto.getEmail()),User::getEmail,userRdto.getEmail())
-                .eq(ObjectUtil.isNotNull(userRdto.getAge()),User::getAge,userRdto.getAge())
-                .eq(ObjectUtil.isNotNull(userRdto.getStatus()),User::getStatus,userRdto.getStatus())
         );
 
         List<UserVo> userVos=users.stream().map(UserMap.INSTANCE::toVo).collect(Collectors.toList());
@@ -73,9 +68,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public IPage<UserVo> page(UserRdto userRdto) {
         Page<User> page=Page.of(userRdto.getPageNum(),userRdto.getPageSize());
         IPage<User> originPage=this.page(page,Wrappers.<User>lambdaQuery()
-                .eq(StrUtil.isNotBlank(userRdto.getName()),User::getName,userRdto.getName())
-                .eq(StrUtil.isNotBlank(userRdto.getEmail()),User::getEmail,userRdto.getEmail())
-                .eq(ObjectUtil.isNotNull(userRdto.getAge()),User::getAge,userRdto.getAge())
         );
         IPage<UserVo> voPage=originPage.convert(UserMap.INSTANCE::toVo);
         return voPage;

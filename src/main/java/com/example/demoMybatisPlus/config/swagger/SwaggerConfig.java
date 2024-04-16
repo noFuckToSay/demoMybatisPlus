@@ -26,7 +26,7 @@ public class SwaggerConfig {
         ParameterBuilder ticketPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
         ticketPar
-                .name("Authorization")
+                .name("token")
                 .description("code token")
                 .modelRef(new ModelRef("string"))
                 .parameterType("header")

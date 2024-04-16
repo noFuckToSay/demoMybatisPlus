@@ -1,5 +1,6 @@
 package com.example.demoMybatisPlus.base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -9,12 +10,13 @@ import java.io.IOException;
 
 
 @RestControllerAdvice
+@Slf4j
 public class ValidExceptonHandler {
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, ServletException.class,IOException.class})
-    public String validExceptionHandler(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult().getFieldError().getDefaultMessage();
-    }
+//    @ExceptionHandler({MethodArgumentNotValidException.class, ServletException.class,IOException.class})
+//    public String validExceptionHandler(MethodArgumentNotValidException ex) {
+//        return ex.getBindingResult().getFieldError().getDefaultMessage();
+//    }
 
 //    @ExceptionHandler(HttpMessageNotReadableException.class)
 //    public String HttpMessageNotReadableExceptionHandler(HttpMessageNotReadableException ex) throws IOException {
@@ -22,7 +24,7 @@ public class ValidExceptonHandler {
 //    }
 
     @ExceptionHandler(RuntimeException.class)
-    public String RuntimeExceptionHandler(RuntimeException ex) throws IOException {
-        return ex.getMessage();
+    public AjaxResult RuntimeExceptionHandler(RuntimeException ex) throws IOException {
+        return AjaxResult.error(ex.getMessage());
     }
 }

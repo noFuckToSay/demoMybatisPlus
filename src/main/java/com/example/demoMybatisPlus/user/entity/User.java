@@ -29,53 +29,40 @@ public class User implements Serializable {
     /**
      * id 主键
      * */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 姓名
      * */
-    private String name;
+    private String userName;
 
     /**
-     * 年龄
+     * 姓名
      * */
-    private Integer age;
+    private String password;
 
-
-    /**
-     * 邮箱
-     * */
-    private String email;
 
     /**
      * 创建人
      * */
-    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      * */
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      * */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**
      * 修改人
      * */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
-    /**
-     * 状态 枚举值
-     * */
-    private UserStatusEnum status;
 
     @TableLogic
     private Integer isDel;
