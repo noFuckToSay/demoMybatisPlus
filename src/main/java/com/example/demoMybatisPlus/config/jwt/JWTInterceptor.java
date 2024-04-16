@@ -26,15 +26,6 @@ public class JWTInterceptor implements HandlerInterceptor {
             User user=JWTUtils.parse(token);
             UserContext.set(user);
             return true;
-        }catch (SignatureException ex){
-            log.error(ex.getMessage(),ex);
-            map.put("success",false);
-            map.put("msg","token信息无效");
-            map.put("code",401);
-            String json=new ObjectMapper().writeValueAsString(map);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().println(json);
-            return false;
         }catch (ExpiredJwtException ex){
             log.error(ex.getMessage(),ex);
             map.put("success",false);
@@ -47,7 +38,7 @@ public class JWTInterceptor implements HandlerInterceptor {
         }catch (Exception ex){
             log.error(ex.getMessage(),ex);
             map.put("success",false);
-            map.put("msg",ex.getMessage());
+            map.put("msg","token信息无效");
             map.put("code",500);
             String json=new ObjectMapper().writeValueAsString(map);
             response.setContentType("application/json;charset=UTF-8");

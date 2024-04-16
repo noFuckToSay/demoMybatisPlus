@@ -1,7 +1,9 @@
 package com.example.demoMybatisPlus.user.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demoMybatisPlus.base.AjaxResult;
 import com.example.demoMybatisPlus.base.UserContext;
 import com.example.demoMybatisPlus.config.jwt.JWTUtils;
@@ -89,9 +91,14 @@ public class UserController {
      */
     @PostMapping("/page")
     @ApiOperation(value = "查询用户列表",httpMethod = "POST")
-    public AjaxResult<IPage<UserVo>> page(@RequestBody UserRdto userRdto) {
+    public AjaxResult<Page<User>> page(@RequestBody UserRdto dto) {
 
-        return AjaxResult.ok();
+        Page<User> page=new Page<>(dto.getPageNum(),dto.getPageSize());
+        page=service.page(page,Wrappers.lambdaQuery(User.class)
+                .eq(StrUtil.isNotBlank(dto.getUserName()),User::getUserName,dto.getUserName())
+        );
+
+        return AjaxResult.ok(page);
     }
 
     /**
@@ -101,6 +108,7 @@ public class UserController {
     @ApiOperation(value = "删除用户",httpMethod = "POST")
     public AjaxResult delete(
             @RequestBody List<Long> ids) {
+        service.delete(ids);
         return AjaxResult.ok();
     }
 
@@ -110,16 +118,6 @@ public class UserController {
     @PostMapping("/submit")
     @ApiOperation(value = "提交",httpMethod = "POST")
     public AjaxResult submit(
-            @RequestBody List<Long> ids) {
-        return AjaxResult.ok();
-    }
-
-    /**
-     * 撤销
-     */
-    @PostMapping("/unSubmit")
-    @ApiOperation(value = "撤销",httpMethod = "POST")
-    public AjaxResult unSubmit(
             @RequestBody List<Long> ids) {
         return AjaxResult.ok();
     }
