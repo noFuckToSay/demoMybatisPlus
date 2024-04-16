@@ -1,6 +1,8 @@
 package com.example.demoMybatisPlus.config.jwt;
 
 import com.example.demoMybatisPlus.base.AjaxResult;
+import com.example.demoMybatisPlus.base.UserContext;
+import com.example.demoMybatisPlus.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -21,7 +23,8 @@ public class JWTInterceptor implements HandlerInterceptor {
         log.info("token is :{}",token);
         Map<String,Object> map=new HashMap();
         try{
-            JWTUtils.parse(token);
+            User user=JWTUtils.parse(token);
+            UserContext.set(user);
             return true;
         }catch (SignatureException ex){
             log.error(ex.getMessage(),ex);

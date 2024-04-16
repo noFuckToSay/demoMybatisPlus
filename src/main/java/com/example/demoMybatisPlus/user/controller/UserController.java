@@ -3,6 +3,7 @@ package com.example.demoMybatisPlus.user.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.demoMybatisPlus.base.AjaxResult;
+import com.example.demoMybatisPlus.base.UserContext;
 import com.example.demoMybatisPlus.config.jwt.JWTUtils;
 import com.example.demoMybatisPlus.user.dto.UserCdto;
 import com.example.demoMybatisPlus.user.dto.UserRdto;
@@ -50,6 +51,8 @@ public class UserController {
         User user=new User();
         user.setUserName(dto.getUserName());
         user.setPassword(dto.getPassword());
+        user.setCreateBy(UserContext.currentUser().getUserName());
+        user.setUpdateBy(UserContext.currentUser().getUserName());
         service.save(user);
         return AjaxResult.ok();
     }
