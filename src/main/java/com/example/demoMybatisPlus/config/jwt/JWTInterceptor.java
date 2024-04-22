@@ -39,7 +39,7 @@ public class JWTInterceptor implements HandlerInterceptor {
             log.error(ex.getMessage(),ex);
             map.put("success",false);
             map.put("msg","token信息无效");
-            map.put("code",500);
+            map.put("code",401);
             String json=new ObjectMapper().writeValueAsString(map);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().println(json);

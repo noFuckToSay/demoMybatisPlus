@@ -81,9 +81,11 @@ public class UserController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "查询用户集合",httpMethod = "POST")
-    public AjaxResult<List<UserVo>> list(
+    public AjaxResult<List<User>> list(
             @RequestBody UserRdto userRdto) {
-        return AjaxResult.ok();
+
+
+        return AjaxResult.ok(service.list());
     }
 
     /**
