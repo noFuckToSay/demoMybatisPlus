@@ -11,7 +11,7 @@ spring:
     password: admin
   sql:
     init:
-      mode: always
+      mode: never  #改成always,自动执行sql创建表和初始化数据
 mybatis-plus:
   configuration:
     jdbc-type-for-null: 'null'
