@@ -6,9 +6,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: master
-    url: jdbc:mysql://localhost:3306/world?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://localhost:3306/world?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&profileSQL=false&profilerEventHandler=com.example.demoMybatisPlus.config.eventHandler.ProfileSQLHandler
     username: root
     password: admin
+  sql:
+    init:
+      mode: always
 mybatis-plus:
   configuration:
     jdbc-type-for-null: 'null'
