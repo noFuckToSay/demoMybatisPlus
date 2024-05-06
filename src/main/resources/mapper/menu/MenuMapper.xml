@@ -36,17 +36,15 @@
 
     <select id="getMenus" resultMap="menus">
         SELECT * FROM
-            (SELECT `id` AS id_1,`type` AS type_1,`title` AS title_1,`key` AS key_1,`icon` AS icon_1,
-                    `create_time` AS `create_time_1`,`create_by` AS `create_by_1`,`update_time` AS `update_time_1`,`update_by` AS `update_by_1`,`is_del` AS `is_del_1`
+            (SELECT `id` AS id_1,`parent_id` AS `parent_id_1`,`type` AS type_1,`title` AS title_1,`parent_key` AS `parent_key_1`,`key` AS key_1,`icon` AS icon_1,
+                    `route_to` AS `route_to_1`,`create_time` AS `create_time_1`,`create_by` AS `create_by_1`,`update_time` AS `update_time_1`,`update_by` AS `update_by_1`,`is_del` AS `is_del_1`
              FROM `menu`
-             WHERE parent_id IS NULL) parent_menu
+             WHERE parent_id IS NULL and is_del=0) parent_menu
                 LEFT JOIN
-            (
-                SELECT
-                    `id` AS id_2,`parent_id` AS `parent_id_2`,`type` AS type_2,`title` AS title_2,`parent_key` AS `parent_key_2`,`key` AS key_2,`icon` AS icon_2,
-                    `create_time` AS `create_time_2`,`create_by` AS `create_by_2`,`update_time` AS `update_time_2`,`update_by` AS `update_by_2`,`is_del` AS `is_del_2`
-                FROM `menu`
-                WHERE parent_id IS NOT NULL
+            (SELECT `id` AS id_2,`parent_id` AS `parent_id_2`,`type` AS type_2,`title` AS title_2,`parent_key` AS `parent_key_2`,`key` AS key_2,`icon` AS icon_2,
+                    `route_to` AS `route_to_2`,`create_time` AS `create_time_2`,`create_by` AS `create_by_2`,`update_time` AS `update_time_2`,`update_by` AS `update_by_2`,`is_del` AS `is_del_2`
+             FROM `menu`
+             WHERE parent_id IS NOT NULL  and is_del=0
             ) sub_menu
             ON parent_menu.id_1=sub_menu.parent_id_2
         ORDER BY parent_menu.id_1,sub_menu.id_2
