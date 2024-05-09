@@ -45,6 +45,9 @@ public class MenuDto {
     @ApiModelProperty("vue-router路由地址")
     private String routeTo;
 
+    @ApiModelProperty("菜单是否开启keep-alive缓存")
+    private Boolean keepAlive;
+
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
 
