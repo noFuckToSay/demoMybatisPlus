@@ -86,6 +86,7 @@ public class UserController {
 
 
         return AjaxResult.ok(service.list());
+//        return AjaxResult.ok(401,null);   //方便测试返回401的时候
     }
 
     /**
