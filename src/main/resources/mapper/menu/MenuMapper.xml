@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demoMybatisPlus.menu.mapper.MenuMapper">
 
-    <resultMap id="menus" type="com.example.demoMybatisPlus.menu.dto.MenuDto">
+    <resultMap id="menus" type="com.example.demoMybatisPlus.menu.vo.MenuVo">
         <id column="id_1" property="id"/>
         <result column="parent_id_1" property="parentId"/>
         <result column="type_1" property="type"/>
@@ -18,7 +18,7 @@
         <result column="update_time_1" property="updateTime"/>
         <result column="is_del_1" property="isDel"/>
 
-        <collection property="subMenus" ofType="com.example.demoMybatisPlus.menu.dto.MenuDto">
+        <collection property="subMenus" ofType="com.example.demoMybatisPlus.menu.vo.MenuVo">
             <id column="id_2" property="id"/>
             <result column="parent_id_2" property="parentId"/>
             <result column="type_2" property="type"/>
@@ -50,5 +50,32 @@
             ) sub_menu
             ON parent_menu.id_1=sub_menu.parent_id_2
         ORDER BY parent_menu.id_1,sub_menu.id_2
+    </select>
+
+    <resultMap id="menusTree" type="com.example.demoMybatisPlus.menu.vo.MenuTreeVo">
+        <result column="title_1" property="title"/>
+        <result column="key_1" property="key"/>
+        <result column="icon_1" property="nodeIcon"/>
+
+        <collection property="children" ofType="com.example.demoMybatisPlus.menu.vo.MenuTreeVo">
+            <result column="title_2" property="title"/>
+            <result column="key_2" property="key"/>
+            <result column="icon_2" property="nodeIcon"/>
+        </collection>
+    </resultMap>
+    <select id="getMenusTree" resultMap="menusTree">
+        SELECT parent_menu.title_1, parent_menu.key_1,parent_menu.icon_1,
+               sub_menu.title_2,sub_menu.key_2,sub_menu.icon_2
+        FROM
+            (SELECT `id`,`title` AS title_1,`key` AS key_1,`icon` AS icon_1
+             FROM `menu`
+             WHERE parent_id IS NULL and is_del=0) parent_menu
+                LEFT JOIN
+            (SELECT `parent_id`,`title` AS title_2,`key` AS key_2,`icon` AS icon_2
+             FROM `menu`
+             WHERE parent_id IS NOT NULL  and is_del=0
+            ) sub_menu
+            ON parent_menu.id=sub_menu.parent_id
+        ORDER BY parent_menu.id,sub_menu.parent_id
     </select>
 </mapper>

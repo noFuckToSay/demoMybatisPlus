@@ -4,6 +4,8 @@ import com.example.demoMybatisPlus.base.AjaxResult;
 import com.example.demoMybatisPlus.menu.dto.MenuDto;
 import com.example.demoMybatisPlus.menu.entity.Menu;
 import com.example.demoMybatisPlus.menu.service.MenuService;
+import com.example.demoMybatisPlus.menu.vo.MenuTreeVo;
+import com.example.demoMybatisPlus.menu.vo.MenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +42,24 @@ public class MenuController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "查询菜单集合", httpMethod = "POST")
-    public AjaxResult<List<Menu>> list(
+    public AjaxResult<List<MenuVo>> list(
             @RequestBody MenuDto menuDto) {
 
-        List<Menu> menus=menuService.getMenus();
+        List<MenuVo> menus=menuService.getMenus();
 
         return AjaxResult.ok(menus);
     }
 
+    /**
+     * 菜单树查询
+     */
+    @PostMapping("/tree")
+    @ApiOperation(value = "查询菜单树的数据", httpMethod = "POST")
+    public AjaxResult<List<MenuTreeVo>> tree(
+            @RequestBody MenuDto menuDto) {
+
+        List<MenuTreeVo> menus=menuService.getMenusTree();
+
+        return AjaxResult.ok(menus);
+    }
 }

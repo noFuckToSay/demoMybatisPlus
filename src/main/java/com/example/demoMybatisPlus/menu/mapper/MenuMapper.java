@@ -2,6 +2,8 @@ package com.example.demoMybatisPlus.menu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demoMybatisPlus.menu.entity.Menu;
+import com.example.demoMybatisPlus.menu.vo.MenuTreeVo;
+import com.example.demoMybatisPlus.menu.vo.MenuVo;
 
 import java.util.List;
 
@@ -15,5 +17,7 @@ import java.util.List;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<Menu> getMenus();
+    List<MenuVo> getMenus();
+
+    List<MenuTreeVo> getMenusTree();
 }

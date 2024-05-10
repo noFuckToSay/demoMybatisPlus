@@ -2,6 +2,8 @@ package com.example.demoMybatisPlus.menu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demoMybatisPlus.menu.entity.Menu;
+import com.example.demoMybatisPlus.menu.vo.MenuTreeVo;
+import com.example.demoMybatisPlus.menu.vo.MenuVo;
 
 import java.util.List;
 
@@ -16,5 +18,7 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
 
-    List<Menu> getMenus();
+    List<MenuVo> getMenus();
+
+    List<MenuTreeVo> getMenusTree();
 }
