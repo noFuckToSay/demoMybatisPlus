@@ -38,8 +38,8 @@ public class Generator {
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="menu";
-        String tableName="menu";
+        String packageName="orderInfo";
+        String tableName="dwd_wl_hwork_parallel_work_order_info_field";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
