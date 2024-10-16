@@ -38,8 +38,8 @@ public class Generator {
         String javaPath=System.getProperty("user.dir")+"/src/main/java";
         String resourcePath=System.getProperty("user.dir")+"/src/main/resources";
 
-        String packageName="orderInfo";
-        String tableName="dwd_wl_hwork_parallel_work_order_info_field";
+        String packageName="factoryToVmi";
+        String tableName="factory_return_vmi_detail";
 
         FastAutoGenerator
                 .create(jdbcUrl, userName, password)
@@ -67,7 +67,7 @@ public class Generator {
                 .strategyConfig(builder -> {
                     builder
                             .addInclude(tableName) // 设置需要生成的表名
-                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_","vmi_,wh_evaluate_") // 设置过滤表前缀
+                            .addTablePrefix("t_", "c_","wms_","vmi_zjt_service_plat_","vmi_,wh_evaluate_","bms_") // 设置过滤表前缀
                             .entityBuilder()
                             .enableFileOverride()
                             .enableLombok()
