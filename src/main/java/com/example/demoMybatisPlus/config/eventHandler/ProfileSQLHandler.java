@@ -1,18 +1,12 @@
 package com.example.demoMybatisPlus.config.eventHandler;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.Query;
 import com.mysql.cj.Session;
 import com.mysql.cj.log.Log;
 import com.mysql.cj.log.ProfilerEvent;
 import com.mysql.cj.log.ProfilerEventHandler;
 import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.protocol.ResultsetRow;
-import com.mysql.cj.protocol.ResultsetRows;
-import com.mysql.cj.result.Row;
 import lombok.extern.slf4j.Slf4j;
-
-import java.sql.ResultSet;
 
 @Slf4j
 public class ProfileSQLHandler implements ProfilerEventHandler {
